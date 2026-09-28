@@ -1,46 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Web Analyzer v3.0 — Enterprise Performance, Security &amp; SEO Audit</title>
-  <meta name="description" content="Professional full-spectrum website diagnostics. Audit TTFB waterfall, SSL/TLS certificates, security headers, DNS &amp; email hygiene, JSON-LD schemas, and SEO hierarchy.">
+  <meta name="description"
+    content="Professional full-spectrum website diagnostics. Audit TTFB waterfall, SSL/TLS certificates, security headers, DNS &amp; email hygiene, JSON-LD schemas, and SEO hierarchy.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
 
   <style>
     :root {
-      --bg-main:        #f8fafc;
-      --bg-card:        #ffffff;
-      --bg-elevated:    #f1f5f9;
-      --bg-input:       #ffffff;
-      --border:         #e2e8f0;
-      --border-focus:   #2563eb;
-      --text-primary:   #0f172a;
+      --bg-main: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-elevated: #f1f5f9;
+      --bg-input: #ffffff;
+      --border: #e2e8f0;
+      --border-focus: #2563eb;
+      --text-primary: #0f172a;
       --text-secondary: #475569;
-      --text-muted:     #94a3b8;
-      --blue:           #2563eb;
-      --blue-light:     #eff6ff;
-      --green:          #10b981;
-      --green-light:    #ecfdf5;
-      --amber:          #f59e0b;
-      --amber-light:    #fffbeb;
-      --red:            #ef4444;
-      --red-light:      #fef2f2;
-      --purple:         #8b5cf6;
-      --purple-light:   #f5f3ff;
-      --font-main:      'Inter', system-ui, -apple-system, sans-serif;
-      --font-mono:      'JetBrains Mono', monospace;
-      --radius-sm:      6px;
-      --radius:         10px;
-      --radius-lg:      16px;
-      --shadow-sm:      0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-      --shadow:         0 4px 14px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
-      --shadow-lg:      0 12px 32px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.04);
+      --text-muted: #94a3b8;
+      --blue: #2563eb;
+      --blue-light: #eff6ff;
+      --green: #10b981;
+      --green-light: #ecfdf5;
+      --amber: #f59e0b;
+      --amber-light: #fffbeb;
+      --red: #ef4444;
+      --red-light: #fef2f2;
+      --purple: #8b5cf6;
+      --purple-light: #f5f3ff;
+      --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --radius-sm: 6px;
+      --radius: 10px;
+      --radius-lg: 16px;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+      --shadow: 0 4px 14px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+      --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
       font-family: var(--font-main);
@@ -62,6 +72,7 @@
       top: 0;
       z-index: 50;
     }
+
     .header-inner {
       max-width: 1240px;
       margin: 0 auto;
@@ -71,6 +82,7 @@
       align-items: center;
       justify-content: space-between;
     }
+
     .brand {
       display: flex;
       align-items: center;
@@ -78,6 +90,7 @@
       text-decoration: none;
       color: var(--text-primary);
     }
+
     .brand-mark {
       width: 34px;
       height: 34px;
@@ -86,14 +99,19 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 2px 8px rgba(37,99,235,0.3);
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
     }
-    .brand-mark svg { color: white; }
+
+    .brand-mark svg {
+      color: white;
+    }
+
     .brand-name {
       font-size: 16px;
       font-weight: 700;
       letter-spacing: -0.02em;
     }
+
     .brand-version {
       font-size: 11px;
       font-weight: 600;
@@ -125,6 +143,7 @@
       text-decoration: none;
       transition: all 0.15s ease;
     }
+
     .btn-ghost:hover {
       background: var(--bg-elevated);
       color: var(--text-primary);
@@ -145,6 +164,7 @@
       text-align: center;
       margin-bottom: 32px;
     }
+
     .search-heading {
       font-size: 30px;
       font-weight: 800;
@@ -152,12 +172,14 @@
       color: var(--text-primary);
       margin-bottom: 8px;
     }
+
     .search-sub {
       font-size: 15px;
       color: var(--text-secondary);
       max-width: 600px;
       margin: 0 auto 24px;
     }
+
     .search-bar {
       display: flex;
       gap: 8px;
@@ -170,10 +192,12 @@
       box-shadow: var(--shadow);
       transition: border-color 0.2s, box-shadow 0.2s;
     }
+
     .search-bar:focus-within {
       border-color: var(--blue);
-      box-shadow: 0 0 0 4px rgba(37,99,235,0.12), var(--shadow);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12), var(--shadow);
     }
+
     .search-bar input {
       flex: 1;
       border: none;
@@ -184,7 +208,11 @@
       color: var(--text-primary);
       outline: none;
     }
-    .search-bar input::placeholder { color: var(--text-muted); }
+
+    .search-bar input::placeholder {
+      color: var(--text-muted);
+    }
+
     .btn-primary {
       background: var(--blue);
       color: white;
@@ -200,9 +228,19 @@
       gap: 6px;
       transition: background 0.15s ease, transform 0.1s;
     }
-    .btn-primary:hover { background: #1d4ed8; }
-    .btn-primary:active { transform: scale(0.98); }
-    .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .btn-primary:hover {
+      background: #1d4ed8;
+    }
+
+    .btn-primary:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
 
     .preset-row {
       display: flex;
@@ -212,7 +250,13 @@
       margin-top: 14px;
       flex-wrap: wrap;
     }
-    .preset-label { font-size: 12px; color: var(--text-muted); font-weight: 500; }
+
+    .preset-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
     .preset-chip {
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -224,6 +268,7 @@
       cursor: pointer;
       transition: all 0.15s ease;
     }
+
     .preset-chip:hover {
       background: var(--bg-elevated);
       color: var(--blue);
@@ -241,6 +286,7 @@
       box-shadow: var(--shadow);
       margin-bottom: 32px;
     }
+
     .spinner {
       width: 44px;
       height: 44px;
@@ -250,11 +296,23 @@
       animation: spin 0.8s linear infinite;
       margin: 0 auto 16px;
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .loading-msg { font-size: 14px; color: var(--text-secondary); margin-top: 6px; }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .loading-msg {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-top: 6px;
+    }
 
     /* ——— RESULTS PANE ——— */
-    .results { display: none; }
+    .results {
+      display: none;
+    }
 
     /* ——— OVERVIEW STRIP ——— */
     .overview-strip {
@@ -269,8 +327,12 @@
       box-shadow: var(--shadow);
       margin-bottom: 24px;
     }
+
     @media (max-width: 768px) {
-      .overview-strip { grid-template-columns: 1fr; text-align: center; }
+      .overview-strip {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
     }
 
     .gauge-col {
@@ -278,21 +340,25 @@
       flex-direction: column;
       align-items: center;
     }
+
     .gauge-wrap {
       position: relative;
       width: 120px;
       height: 120px;
     }
+
     .gauge-wrap svg {
       width: 100%;
       height: 100%;
       transform: rotate(-90deg);
     }
+
     .gauge-bg {
       fill: none;
       stroke: var(--bg-elevated);
       stroke-width: 9;
     }
+
     .gauge-fill {
       fill: none;
       stroke: var(--green);
@@ -302,6 +368,7 @@
       stroke-dashoffset: 339;
       transition: stroke-dashoffset 1.2s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.4s;
     }
+
     .gauge-center {
       position: absolute;
       inset: 0;
@@ -310,12 +377,14 @@
       align-items: center;
       justify-content: center;
     }
+
     .gauge-score-num {
       font-size: 32px;
       font-weight: 800;
       letter-spacing: -0.03em;
       line-height: 1;
     }
+
     .grade-badge {
       font-size: 12px;
       font-weight: 700;
@@ -324,11 +393,35 @@
       margin-top: 4px;
       text-transform: uppercase;
     }
-    .grade-a { background: var(--green-light); color: var(--green); }
-    .grade-b { background: var(--blue-light); color: var(--blue); }
-    .grade-c { background: var(--amber-light); color: var(--amber); }
-    .grade-d { background: var(--red-light); color: var(--red); }
-    .gauge-label { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 8px; }
+
+    .grade-a {
+      background: var(--green-light);
+      color: var(--green);
+    }
+
+    .grade-b {
+      background: var(--blue-light);
+      color: var(--blue);
+    }
+
+    .grade-c {
+      background: var(--amber-light);
+      color: var(--amber);
+    }
+
+    .grade-d {
+      background: var(--red-light);
+      color: var(--red);
+    }
+
+    .gauge-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 8px;
+    }
 
     .overview-target {
       font-size: 18px;
@@ -338,6 +431,7 @@
       gap: 10px;
       flex-wrap: wrap;
     }
+
     .overview-url {
       font-family: var(--font-mono);
       font-size: 13px;
@@ -345,33 +439,69 @@
       margin: 4px 0 16px;
       word-break: break-all;
     }
+
     .status-badge {
       font-size: 12px;
       font-weight: 600;
       padding: 3px 8px;
       border-radius: 6px;
     }
-    .badge-ok { background: var(--green-light); color: var(--green); border: 1px solid #bbf7d0; }
-    .badge-warn { background: var(--amber-light); color: var(--amber); border: 1px solid #fde68a; }
-    .badge-error { background: var(--red-light); color: var(--red); border: 1px solid #fecaca; }
+
+    .badge-ok {
+      background: var(--green-light);
+      color: var(--green);
+      border: 1px solid #bbf7d0;
+    }
+
+    .badge-warn {
+      background: var(--amber-light);
+      color: var(--amber);
+      border: 1px solid #fde68a;
+    }
+
+    .badge-error {
+      background: var(--red-light);
+      color: var(--red);
+      border: 1px solid #fecaca;
+    }
 
     .kpi-row {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 12px;
     }
+
     @media (max-width: 900px) {
-      .kpi-row { grid-template-columns: repeat(2, 1fr); }
+      .kpi-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
+
     .kpi-tile {
       background: var(--bg-elevated);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 10px 14px;
     }
-    .kpi-label { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; }
-    .kpi-value { font-size: 16px; font-weight: 700; color: var(--text-primary); margin: 2px 0; }
-    .kpi-sub { font-size: 11px; color: var(--text-secondary); }
+
+    .kpi-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .kpi-value {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 2px 0;
+    }
+
+    .kpi-sub {
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
 
     /* ——— TOOLBAR & TABS ——— */
     .toolbar {
@@ -382,6 +512,7 @@
       gap: 12px;
       flex-wrap: wrap;
     }
+
     .tab-list {
       display: flex;
       gap: 4px;
@@ -391,6 +522,7 @@
       padding: 4px;
       overflow-x: auto;
     }
+
     .tab-btn {
       background: transparent;
       border: none;
@@ -403,13 +535,23 @@
       white-space: nowrap;
       transition: all 0.15s ease;
     }
-    .tab-btn:hover { color: var(--text-primary); background: var(--bg-elevated); }
+
+    .tab-btn:hover {
+      color: var(--text-primary);
+      background: var(--bg-elevated);
+    }
+
     .tab-btn.active {
       background: var(--blue);
       color: white;
       font-weight: 600;
     }
-    .action-row { display: flex; gap: 8px; }
+
+    .action-row {
+      display: flex;
+      gap: 8px;
+    }
+
     .btn-outline {
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -424,6 +566,7 @@
       gap: 6px;
       transition: all 0.15s ease;
     }
+
     .btn-outline:hover {
       background: var(--bg-elevated);
       color: var(--text-primary);
@@ -431,8 +574,13 @@
     }
 
     /* ——— CARDS & GRIDS ——— */
-    .tab-pane { display: none; }
-    .tab-pane.active { display: block; }
+    .tab-pane {
+      display: none;
+    }
+
+    .tab-pane.active {
+      display: block;
+    }
 
     .grid-2 {
       display: grid;
@@ -440,8 +588,16 @@
       gap: 20px;
       margin-bottom: 20px;
     }
-    @media (max-width: 860px) { .grid-2 { grid-template-columns: 1fr; } }
-    .grid-1 { margin-bottom: 20px; }
+
+    @media (max-width: 860px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .grid-1 {
+      margin-bottom: 20px;
+    }
 
     .card {
       background: var(--bg-card);
@@ -450,6 +606,7 @@
       overflow: hidden;
       box-shadow: var(--shadow-sm);
     }
+
     .card-head {
       padding: 16px 20px;
       border-bottom: 1px solid var(--border);
@@ -458,32 +615,103 @@
       justify-content: space-between;
       background: #fafbfc;
     }
+
     .card-title {
       font-size: 14px;
       font-weight: 600;
       color: var(--text-primary);
     }
-    .card-body { padding: 20px; }
+
+    .card-body {
+      padding: 20px;
+    }
 
     /* ——— WATERFALL ——— */
-    .waterfall-group { margin-bottom: 14px; }
-    .wf-labels { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px; }
-    .wf-name { font-weight: 500; color: var(--text-secondary); }
-    .wf-ms { font-family: var(--font-mono); font-weight: 600; color: var(--text-primary); }
-    .wf-track { background: var(--bg-elevated); border-radius: 4px; height: 10px; overflow: hidden; }
-    .wf-bar { height: 100%; border-radius: 4px; transition: width 0.8s ease; }
-    .bar-dns      { background: #60a5fa; }
-    .bar-tcp      { background: #38bdf8; }
-    .bar-tls      { background: #818cf8; }
-    .bar-ttfb     { background: #f59e0b; }
-    .bar-download { background: #10b981; }
+    .waterfall-group {
+      margin-bottom: 14px;
+    }
 
-    .wf-legend { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); }
-    .wf-legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-secondary); }
-    .wf-dot { width: 9px; height: 9px; border-radius: 2px; }
+    .wf-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    .wf-name {
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .wf-ms {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .wf-track {
+      background: var(--bg-elevated);
+      border-radius: 4px;
+      height: 10px;
+      overflow: hidden;
+    }
+
+    .wf-bar {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.8s ease;
+    }
+
+    .bar-dns {
+      background: #60a5fa;
+    }
+
+    .bar-tcp {
+      background: #38bdf8;
+    }
+
+    .bar-tls {
+      background: #818cf8;
+    }
+
+    .bar-ttfb {
+      background: #f59e0b;
+    }
+
+    .bar-download {
+      background: #10b981;
+    }
+
+    .wf-legend {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+
+    .wf-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .wf-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 2px;
+    }
 
     /* ——— DATA LIST & TABLES ——— */
-    .data-list { display: flex; flex-direction: column; gap: 10px; }
+    .data-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
     .data-item {
       display: flex;
       justify-content: space-between;
@@ -493,14 +721,51 @@
       border-radius: var(--radius-sm);
       font-size: 13px;
     }
-    .data-k { color: var(--text-secondary); font-weight: 500; }
-    .data-v { font-weight: 600; color: var(--text-primary); font-family: var(--font-mono); font-size: 12px; word-break: break-all; text-align: right; }
 
-    .tbl-wrap { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; font-size: 13px; }
-    th { text-align: left; padding: 10px 14px; background: #fafbfc; border-bottom: 1px solid var(--border); color: var(--text-muted); font-size: 11px; text-transform: uppercase; font-weight: 600; }
-    td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
-    tr:last-child td { border-bottom: none; }
+    .data-k {
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .data-v {
+      font-weight: 600;
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      word-break: break-all;
+      text-align: right;
+    }
+
+    .tbl-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th {
+      text-align: left;
+      padding: 10px 14px;
+      background: #fafbfc;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
 
     .pill {
       display: inline-block;
@@ -511,34 +776,165 @@
       text-transform: uppercase;
       letter-spacing: 0.03em;
     }
-    .pill-pass { background: var(--green-light); color: var(--green); border: 1px solid #bbf7d0; }
-    .pill-fail { background: var(--red-light); color: var(--red); border: 1px solid #fecaca; }
-    .pill-warn { background: var(--amber-light); color: var(--amber); border: 1px solid #fde68a; }
-    .pill-info { background: var(--blue-light); color: var(--blue); border: 1px solid #bfdbfe; }
 
-    .hdr-name { font-weight: 600; color: var(--text-primary); font-family: var(--font-mono); font-size: 12px; }
-    .hdr-desc { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
-    .hdr-val  { font-family: var(--font-mono); font-size: 11px; color: var(--text-primary); word-break: break-all; }
-    .hdr-fix  { font-size: 11px; color: var(--blue); margin-top: 4px; }
+    .pill-pass {
+      background: var(--green-light);
+      color: var(--green);
+      border: 1px solid #bbf7d0;
+    }
+
+    .pill-fail {
+      background: var(--red-light);
+      color: var(--red);
+      border: 1px solid #fecaca;
+    }
+
+    .pill-warn {
+      background: var(--amber-light);
+      color: var(--amber);
+      border: 1px solid #fde68a;
+    }
+
+    .pill-info {
+      background: var(--blue-light);
+      color: var(--blue);
+      border: 1px solid #bfdbfe;
+    }
+
+    .hdr-name {
+      font-weight: 600;
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+
+    .hdr-desc {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    .hdr-val {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-primary);
+      word-break: break-all;
+    }
+
+    .hdr-fix {
+      font-size: 11px;
+      color: var(--blue);
+      margin-top: 4px;
+    }
 
     /* ——— SERP & SOCIAL PREVIEWS ——— */
-    .serp-card { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; font-family: Arial, sans-serif; }
-    .serp-url { font-size: 12px; color: #202124; margin-bottom: 4px; word-break: break-all; }
-    .serp-title { font-size: 18px; color: #1a0dab; font-weight: 400; text-decoration: none; display: block; margin-bottom: 4px; line-height: 1.3; }
-    .serp-desc { font-size: 13px; color: #4d5156; line-height: 1.4; }
+    .serp-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      font-family: Arial, sans-serif;
+    }
 
-    .social-card { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: white; max-width: 480px; }
-    .social-img-wrap { width: 100%; height: 180px; background: var(--bg-elevated); display: flex; align-items: center; justify-content: center; overflow: hidden; }
-    .social-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
-    .social-info { padding: 12px 14px; }
-    .social-domain { font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 600; }
-    .social-title { font-size: 14px; font-weight: 600; color: var(--text-primary); margin: 2px 0 4px; }
-    .social-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.4; }
+    .serp-url {
+      font-size: 12px;
+      color: #202124;
+      margin-bottom: 4px;
+      word-break: break-all;
+    }
 
-    .headings-box { display: flex; flex-direction: column; gap: 8px; }
-    .heading-item { display: flex; gap: 10px; align-items: baseline; font-size: 13px; padding: 4px 0; border-bottom: 1px dashed var(--border); }
-    .h-tag { font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; background: var(--bg-elevated); color: var(--blue); font-family: var(--font-mono); }
-    .h-text { color: var(--text-primary); }
+    .serp-title {
+      font-size: 18px;
+      color: #1a0dab;
+      font-weight: 400;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+
+    .serp-desc {
+      font-size: 13px;
+      color: #4d5156;
+      line-height: 1.4;
+    }
+
+    .social-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: white;
+      max-width: 480px;
+    }
+
+    .social-img-wrap {
+      width: 100%;
+      height: 180px;
+      background: var(--bg-elevated);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .social-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .social-info {
+      padding: 12px 14px;
+    }
+
+    .social-domain {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .social-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 2px 0 4px;
+    }
+
+    .social-desc {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    .headings-box {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .heading-item {
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+      font-size: 13px;
+      padding: 4px 0;
+      border-bottom: 1px dashed var(--border);
+    }
+
+    .h-tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: var(--bg-elevated);
+      color: var(--blue);
+      font-family: var(--font-mono);
+    }
+
+    .h-text {
+      color: var(--text-primary);
+    }
 
     /* ——— RECOMMENDATIONS ——— */
     .rec-item {
@@ -551,20 +947,77 @@
       margin-bottom: 12px;
       transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
-    .rec-item:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
-    .rec-bar { width: 4px; border-radius: 2px; flex-shrink: 0; }
-    .rec-bar.bar-high   { background: var(--red); }
-    .rec-bar.bar-medium { background: var(--amber); }
-    .rec-bar.bar-low    { background: var(--blue); }
-    .rec-body { flex: 1; }
-    .rec-header { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; flex-wrap: wrap; }
-    .rec-cat { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; }
-    .rec-title { font-size: 14px; font-weight: 600; color: var(--text-primary); }
-    .rec-desc { font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; }
-    .rec-action { font-size: 12px; background: var(--bg-elevated); border-left: 3px solid var(--blue); padding: 8px 12px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; color: var(--text-primary); }
+
+    .rec-item:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow);
+    }
+
+    .rec-bar {
+      width: 4px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    .rec-bar.bar-high {
+      background: var(--red);
+    }
+
+    .rec-bar.bar-medium {
+      background: var(--amber);
+    }
+
+    .rec-bar.bar-low {
+      background: var(--blue);
+    }
+
+    .rec-body {
+      flex: 1;
+    }
+
+    .rec-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+      flex-wrap: wrap;
+    }
+
+    .rec-cat {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .rec-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .rec-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .rec-action {
+      font-size: 12px;
+      background: var(--bg-elevated);
+      border-left: 3px solid var(--blue);
+      padding: 8px 12px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      color: var(--text-primary);
+    }
 
     /* ——— TECH TAGS & SCHEMA CARDS ——— */
-    .tech-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tech-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
     .tech-tag {
       background: var(--bg-elevated);
       border: 1px solid var(--border);
@@ -577,6 +1030,7 @@
       align-items: center;
       gap: 6px;
     }
+
     .schema-card {
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -584,59 +1038,306 @@
       background: var(--bg-elevated);
       margin-bottom: 10px;
     }
-    .schema-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-    .schema-name { font-weight: 700; color: var(--blue); font-size: 13px; font-family: var(--font-mono); }
-    .schema-raw { font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); white-space: pre-wrap; word-break: break-all; }
 
-    /* ——— MODALS (Compare & Badge) ——— */
+    .schema-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .schema-name {
+      font-weight: 700;
+      color: var(--blue);
+      font-size: 13px;
+      font-family: var(--font-mono);
+    }
+
+    .schema-raw {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-secondary);
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    /* ��� MODALS (Compare & Badge) ��� */
     .modal-backdrop {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.6);
-      backdrop-filter: blur(4px);
-      z-index: 100;
+      background: rgba(15, 23, 42, 0.72);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 1000;
       align-items: center;
       justify-content: center;
       padding: 20px;
     }
-    .modal-backdrop.open { display: flex; }
-    .modal-box {
-      background: var(--bg-card);
-      border-radius: var(--radius-lg);
-      max-width: 600px;
-      width: 100%;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-lg);
-      overflow: hidden;
-      animation: popIn 0.2s ease-out;
+    .modal-backdrop.open {
+      display: flex;
     }
-    @keyframes popIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .modal-box {
+      background: #ffffff;
+      border-radius: 18px;
+      max-width: 760px;
+      width: 95%;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.28), 0 0 0 1px rgba(0, 0, 0, 0.04);
+      overflow: hidden;
+      animation: popInModal 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes popInModal {
+      from { transform: scale(0.96) translateY(12px); opacity: 0; }
+      to { transform: scale(1) translateY(0); opacity: 1; }
+    }
     .modal-head {
-      padding: 16px 20px;
-      border-bottom: 1px solid var(--border);
+      padding: 20px 24px;
+      border-bottom: 1px solid #e2e8f0;
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      background: #fafbfc;
+      align-items: flex-start;
+      background: #f8fafc;
     }
-    .modal-title { font-size: 16px; font-weight: 700; }
-    .btn-close { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text-muted); }
-    .btn-close:hover { color: var(--text-primary); }
-    .modal-body { padding: 20px; }
+    .modal-title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .modal-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: -0.01em;
+    }
+    .modal-subtitle {
+      font-size: 13px;
+      color: #64748b;
+      font-weight: 400;
+    }
+    .btn-close {
+      background: #e2e8f0;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #475569;
+      font-size: 18px;
+      line-height: 1;
+      transition: all 0.15s ease;
+    }
+    .btn-close:hover {
+      background: #cbd5e1;
+      color: #0f172a;
+    }
+    .modal-body {
+      padding: 24px;
+      max-height: calc(85vh - 75px);
+      overflow-y: auto;
+    }
 
-    .compare-grid {
+    /* Modern Compare Form */
+    .cmp-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .cmp-inputs-row {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 14px;
+      align-items: flex-end;
+    }
+    @media (max-width: 620px) {
+      .cmp-inputs-row { grid-template-columns: 1fr; }
+      .cmp-vs-badge { margin: 4px auto; }
+    }
+    .cmp-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .cmp-input-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .cmp-tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
+      font-size: 11px;
+      font-weight: 700;
+      color: white;
+      background: #2563eb;
+    }
+    .cmp-tag-b {
+      background: #7c3aed;
+    }
+    .cmp-field {
+      width: 100%;
+      height: 46px;
+      padding: 0 16px;
+      border-radius: 10px;
+      border: 1.5px solid #cbd5e1;
+      background: #ffffff;
+      font-size: 14px;
+      font-family: inherit;
+      color: #0f172a;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .cmp-field:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+    }
+    .cmp-vs-badge {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #f1f5f9;
+      border: 1.5px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      color: #64748b;
+      letter-spacing: 0.04em;
+      margin-bottom: 5px;
+    }
+    .btn-compare-action {
+      height: 48px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+      margin-top: 4px;
+    }
+    .btn-compare-action:hover {
+      background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.45);
+    }
+    .btn-compare-action:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Comparison Output Results */
+    .cmp-results-wrap {
+      margin-top: 24px;
+      animation: popInModal 0.25s ease-out;
+    }
+    .cmp-grid-cards {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 16px;
-      margin-top: 16px;
+      margin-bottom: 18px;
     }
-    .compare-col {
-      background: var(--bg-elevated);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 14px;
+    @media (max-width: 560px) {
+      .cmp-grid-cards { grid-template-columns: 1fr; }
+    }
+    .cmp-col-card {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 18px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       text-align: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .cmp-card-url {
+      font-size: 14px;
+      font-weight: 700;
+      color: #0f172a;
+      word-break: break-all;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .cmp-card-score {
+      font-size: 38px;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      margin: 4px 0;
+    }
+    .cmp-card-grade {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 999px;
+      margin-top: 6px;
+    }
+    
+    .cmp-table-wrap {
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .cmp-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .cmp-table th {
+      text-align: left;
+      padding: 11px 16px;
+      background: #f1f5f9;
+      color: #475569;
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1.5px solid #e2e8f0;
+    }
+    .cmp-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid #f1f5f9;
+      color: #1e293b;
+    }
+    .cmp-table tr:last-child td {
+      border-bottom: none;
+    }
+    .cmp-table tr:nth-child(even) {
+      background: #fafbfc;
+    }
+    .cmp-winner {
+      color: #15803d !important;
+      font-weight: 700;
+      background: #f0fdf4 !important;
     }
 
     /* ——— FOOTER ——— */
@@ -646,6 +1347,7 @@
       padding: 24px 0;
       margin-top: auto;
     }
+
     .footer-inner {
       max-width: 1240px;
       margin: 0 auto;
@@ -656,19 +1358,56 @@
       flex-wrap: wrap;
       gap: 12px;
     }
-    .footer-brand { font-size: 13px; font-weight: 500; color: var(--text-secondary); }
-    .footer-meta { font-size: 12px; color: var(--text-muted); }
+
+    .footer-brand {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .footer-meta {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
 
     /* ——— PRINT / PDF STYLING ——— */
     @media print {
-      header, .search-section, .toolbar, footer, .modal-backdrop { display: none !important; }
-      body, .page { background: white; padding: 0; margin: 0; }
-      .results, .tab-pane { display: block !important; }
-      .card { break-inside: avoid; border: 1px solid #ccc; box-shadow: none; margin-bottom: 14px; }
-      .overview-strip { border: 1px solid #ccc; box-shadow: none; }
+
+      header,
+      .search-section,
+      .toolbar,
+      footer,
+      .modal-backdrop {
+        display: none !important;
+      }
+
+      body,
+      .page {
+        background: white;
+        padding: 0;
+        margin: 0;
+      }
+
+      .results,
+      .tab-pane {
+        display: block !important;
+      }
+
+      .card {
+        break-inside: avoid;
+        border: 1px solid #ccc;
+        box-shadow: none;
+        margin-bottom: 14px;
+      }
+
+      .overview-strip {
+        border: 1px solid #ccc;
+        box-shadow: none;
+      }
     }
   </style>
 </head>
+
 <body>
 
   <!-- Header -->
@@ -676,22 +1415,33 @@
     <div class="header-inner">
       <a class="brand" href="/">
         <div class="brand-mark">
-          <svg width="18" height="18" fill="none" stroke="white" viewBox="0 0 24 24" stroke-width="2.3"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          <svg width="18" height="18" fill="none" stroke="white" viewBox="0 0 24 24" stroke-width="2.3">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+          </svg>
         </div>
         <span class="brand-name">Web Analyzer</span>
         <span class="brand-version">v3.0</span>
       </a>
       <div class="header-actions">
         <button class="btn-ghost" onclick="openCompareModal()">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path
+              d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          </svg>
           Compare URLs
         </button>
         <button class="btn-ghost" onclick="openBadgeModal()">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path
+              d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+          </svg>
           Get Badge
         </button>
         <a class="btn-ghost" href="https://github.com/umais-codes/web-analyzer" target="_blank" rel="noreferrer">
-          <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+          </svg>
           Source
         </a>
       </div>
@@ -703,11 +1453,13 @@
     <!-- Search Hero -->
     <div class="search-section">
       <h1 class="search-heading">Website Performance, Security &amp; SEO Audit</h1>
-      <p class="search-sub">Enterprise diagnostics: Traces TTFB latency, SSL cipher health, DNS hygiene, JSON-LD structured data &amp; SEO in milliseconds.</p>
+      <p class="search-sub">Enterprise diagnostics: Traces TTFB latency, SSL cipher health, DNS hygiene, JSON-LD
+        structured data &amp; SEO in milliseconds.</p>
 
       <form id="auditForm" onsubmit="event.preventDefault(); runAudit();">
         <div class="search-bar">
-          <input id="urlInput" type="text" placeholder="https://example.com" autocomplete="off" spellcheck="false" required>
+          <input id="urlInput" type="text" placeholder="https://example.com" autocomplete="off" spellcheck="false"
+            required>
           <button id="auditBtn" type="submit" class="btn-primary">Run Audit</button>
         </div>
       </form>
@@ -736,8 +1488,8 @@
         <div class="gauge-col">
           <div class="gauge-wrap">
             <svg viewBox="0 0 120 120">
-              <circle class="gauge-bg" cx="60" cy="60" r="54"/>
-              <circle class="gauge-fill" id="gaugeFill" cx="60" cy="60" r="54"/>
+              <circle class="gauge-bg" cx="60" cy="60" r="54" />
+              <circle class="gauge-fill" id="gaugeFill" cx="60" cy="60" r="54" />
             </svg>
             <div class="gauge-center">
               <div class="gauge-score-num" id="scoreNum">—</div>
@@ -792,11 +1544,16 @@
         </nav>
         <div class="action-row">
           <button class="btn-outline" onclick="doExport()">
-            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+            </svg>
             Export JSON
           </button>
           <button class="btn-outline" onclick="window.print()">
-            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path
+                d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+            </svg>
             Print / PDF Report
           </button>
         </div>
@@ -812,46 +1569,80 @@
             </div>
             <div class="card-body">
               <div class="waterfall-group">
-                <div class="wf-labels"><span class="wf-name">DNS Lookup</span><span class="wf-ms" id="tDns">—</span></div>
-                <div class="wf-track"><div class="wf-bar bar-dns" id="bDns" style="width:0%"></div></div>
+                <div class="wf-labels"><span class="wf-name">DNS Lookup</span><span class="wf-ms" id="tDns">—</span>
+                </div>
+                <div class="wf-track">
+                  <div class="wf-bar bar-dns" id="bDns" style="width:0%"></div>
+                </div>
               </div>
               <div class="waterfall-group">
-                <div class="wf-labels"><span class="wf-name">TCP Connection</span><span class="wf-ms" id="tTcp">—</span></div>
-                <div class="wf-track"><div class="wf-bar bar-tcp" id="bTcp" style="width:0%"></div></div>
+                <div class="wf-labels"><span class="wf-name">TCP Connection</span><span class="wf-ms" id="tTcp">—</span>
+                </div>
+                <div class="wf-track">
+                  <div class="wf-bar bar-tcp" id="bTcp" style="width:0%"></div>
+                </div>
               </div>
               <div class="waterfall-group">
-                <div class="wf-labels"><span class="wf-name">TLS Handshake</span><span class="wf-ms" id="tTls">—</span></div>
-                <div class="wf-track"><div class="wf-bar bar-tls" id="bTls" style="width:0%"></div></div>
+                <div class="wf-labels"><span class="wf-name">TLS Handshake</span><span class="wf-ms" id="tTls">—</span>
+                </div>
+                <div class="wf-track">
+                  <div class="wf-bar bar-tls" id="bTls" style="width:0%"></div>
+                </div>
               </div>
               <div class="waterfall-group">
-                <div class="wf-labels"><span class="wf-name">Time to First Byte (TTFB)</span><span class="wf-ms" id="tTtfb">—</span></div>
-                <div class="wf-track"><div class="wf-bar bar-ttfb" id="bTtfb" style="width:0%"></div></div>
+                <div class="wf-labels"><span class="wf-name">Time to First Byte (TTFB)</span><span class="wf-ms"
+                    id="tTtfb">—</span></div>
+                <div class="wf-track">
+                  <div class="wf-bar bar-ttfb" id="bTtfb" style="width:0%"></div>
+                </div>
               </div>
               <div class="waterfall-group">
-                <div class="wf-labels"><span class="wf-name">Content Download</span><span class="wf-ms" id="tDownload">—</span></div>
-                <div class="wf-track"><div class="wf-bar bar-download" id="bDownload" style="width:0%"></div></div>
+                <div class="wf-labels"><span class="wf-name">Content Download</span><span class="wf-ms"
+                    id="tDownload">—</span></div>
+                <div class="wf-track">
+                  <div class="wf-bar bar-download" id="bDownload" style="width:0%"></div>
+                </div>
               </div>
               <div class="wf-legend">
-                <div class="wf-legend-item"><div class="wf-dot bar-dns"></div>DNS</div>
-                <div class="wf-legend-item"><div class="wf-dot bar-tcp"></div>TCP</div>
-                <div class="wf-legend-item"><div class="wf-dot bar-tls"></div>TLS</div>
-                <div class="wf-legend-item"><div class="wf-dot bar-ttfb"></div>TTFB</div>
-                <div class="wf-legend-item"><div class="wf-dot bar-download"></div>Download</div>
+                <div class="wf-legend-item">
+                  <div class="wf-dot bar-dns"></div>DNS
+                </div>
+                <div class="wf-legend-item">
+                  <div class="wf-dot bar-tcp"></div>TCP
+                </div>
+                <div class="wf-legend-item">
+                  <div class="wf-dot bar-tls"></div>TLS
+                </div>
+                <div class="wf-legend-item">
+                  <div class="wf-dot bar-ttfb"></div>TTFB
+                </div>
+                <div class="wf-legend-item">
+                  <div class="wf-dot bar-download"></div>Download
+                </div>
               </div>
             </div>
           </div>
 
           <div class="card">
-            <div class="card-head"><div class="card-title">Payload &amp; Protocol Details</div></div>
+            <div class="card-head">
+              <div class="card-title">Payload &amp; Protocol Details</div>
+            </div>
             <div class="card-body">
               <div class="data-list">
-                <div class="data-item"><span class="data-k">HTTP Protocol</span><span class="data-v" id="dProto">—</span></div>
-                <div class="data-item"><span class="data-k">HTTP Status</span><span class="data-v" id="dStatus">—</span></div>
-                <div class="data-item"><span class="data-k">Total Round-Trip Time</span><span class="data-v" id="dTotal">—</span></div>
-                <div class="data-item"><span class="data-k">Uncompressed / Download Size</span><span class="data-v" id="dSize">—</span></div>
-                <div class="data-item"><span class="data-k">Compression Encoding</span><span class="data-v" id="dComp">—</span></div>
-                <div class="data-item"><span class="data-k">Declared Content-Type</span><span class="data-v" id="dCType">—</span></div>
-                <div class="data-item"><span class="data-k">Redirect Chain</span><span class="data-v" id="dRedirects">—</span></div>
+                <div class="data-item"><span class="data-k">HTTP Protocol</span><span class="data-v"
+                    id="dProto">—</span></div>
+                <div class="data-item"><span class="data-k">HTTP Status</span><span class="data-v" id="dStatus">—</span>
+                </div>
+                <div class="data-item"><span class="data-k">Total Round-Trip Time</span><span class="data-v"
+                    id="dTotal">—</span></div>
+                <div class="data-item"><span class="data-k">Uncompressed / Download Size</span><span class="data-v"
+                    id="dSize">—</span></div>
+                <div class="data-item"><span class="data-k">Compression Encoding</span><span class="data-v"
+                    id="dComp">—</span></div>
+                <div class="data-item"><span class="data-k">Declared Content-Type</span><span class="data-v"
+                    id="dCType">—</span></div>
+                <div class="data-item"><span class="data-k">Redirect Chain</span><span class="data-v"
+                    id="dRedirects">—</span></div>
               </div>
             </div>
           </div>
@@ -868,11 +1659,16 @@
             </div>
             <div class="card-body">
               <div class="data-list">
-                <div class="data-item"><span class="data-k">Certificate Issuer</span><span class="data-v" id="sCertIssuer">—</span></div>
-                <div class="data-item"><span class="data-k">Common Name (Subject)</span><span class="data-v" id="sCertSubject">—</span></div>
-                <div class="data-item"><span class="data-k">Validity Period</span><span class="data-v" id="sCertDays">—</span></div>
-                <div class="data-item"><span class="data-k">Negotiated TLS Version</span><span class="data-v" id="sCertTls">—</span></div>
-                <div class="data-item"><span class="data-k">Cipher Suite</span><span class="data-v" id="sCertCipher">—</span></div>
+                <div class="data-item"><span class="data-k">Certificate Issuer</span><span class="data-v"
+                    id="sCertIssuer">—</span></div>
+                <div class="data-item"><span class="data-k">Common Name (Subject)</span><span class="data-v"
+                    id="sCertSubject">—</span></div>
+                <div class="data-item"><span class="data-k">Validity Period</span><span class="data-v"
+                    id="sCertDays">—</span></div>
+                <div class="data-item"><span class="data-k">Negotiated TLS Version</span><span class="data-v"
+                    id="sCertTls">—</span></div>
+                <div class="data-item"><span class="data-k">Cipher Suite</span><span class="data-v"
+                    id="sCertCipher">—</span></div>
               </div>
             </div>
           </div>
@@ -934,7 +1730,9 @@
           </div>
 
           <div class="card">
-            <div class="card-head"><div class="card-title">Cookie Security Audit</div></div>
+            <div class="card-head">
+              <div class="card-title">Cookie Security Audit</div>
+            </div>
             <div class="card-body">
               <div id="cookieSummary" style="margin-bottom:12px;font-size:13px;color:var(--text-secondary);">—</div>
               <div class="tbl-wrap">
@@ -959,12 +1757,15 @@
       <div id="tab-seo" class="tab-pane">
         <div class="grid-2">
           <div class="card">
-            <div class="card-head"><div class="card-title">Google SERP Search Result Simulator</div></div>
+            <div class="card-head">
+              <div class="card-title">Google SERP Search Result Simulator</div>
+            </div>
             <div class="card-body">
               <div class="serp-card">
                 <div class="serp-url" id="serpUrl">https://example.com</div>
                 <div class="serp-title" id="serpTitle">Sample Page Title</div>
-                <div class="serp-desc" id="serpDesc">Meta description preview will be displayed here in standard Google snippet styling.</div>
+                <div class="serp-desc" id="serpDesc">Meta description preview will be displayed here in standard Google
+                  snippet styling.</div>
               </div>
               <div style="display:flex;gap:16px;margin-top:12px;font-size:12px;color:var(--text-secondary);">
                 <span>Title: <strong id="titleCharCount">0</strong> / 60 chars</span>
@@ -974,7 +1775,9 @@
           </div>
 
           <div class="card">
-            <div class="card-head"><div class="card-title">Social Share Card Preview (OpenGraph / Twitter)</div></div>
+            <div class="card-head">
+              <div class="card-title">Social Share Card Preview (OpenGraph / Twitter)</div>
+            </div>
             <div class="card-body">
               <div class="social-card">
                 <div class="social-img-wrap" id="ogImgWrap"></div>
@@ -995,18 +1798,25 @@
               <span class="pill pill-info" id="schemaCountPill">0 Schemas</span>
             </div>
             <div class="card-body" id="schemaBody">
-              <span style="font-size:13px;color:var(--text-muted)">No Schema.org JSON-LD structured data detected.</span>
+              <span style="font-size:13px;color:var(--text-muted)">No Schema.org JSON-LD structured data
+                detected.</span>
             </div>
           </div>
 
           <div class="card">
-            <div class="card-head"><div class="card-title">Headings Hierarchy &amp; Crawl Discovery</div></div>
+            <div class="card-head">
+              <div class="card-title">Headings Hierarchy &amp; Crawl Discovery</div>
+            </div>
             <div class="card-body">
               <div class="data-list" style="margin-bottom:14px;">
-                <div class="data-item"><span class="data-k">Robots.txt Presence</span><span class="data-v" id="mRobotsTxt">—</span></div>
-                <div class="data-item"><span class="data-k">Sitemap.xml Presence</span><span class="data-v" id="mSitemap">—</span></div>
-                <div class="data-item"><span class="data-k">Canonical Tag</span><span class="data-v" id="mCanonical">—</span></div>
-                <div class="data-item"><span class="data-k">Language</span><span class="data-v" id="mLang">—</span></div>
+                <div class="data-item"><span class="data-k">Robots.txt Presence</span><span class="data-v"
+                    id="mRobotsTxt">—</span></div>
+                <div class="data-item"><span class="data-k">Sitemap.xml Presence</span><span class="data-v"
+                    id="mSitemap">—</span></div>
+                <div class="data-item"><span class="data-k">Canonical Tag</span><span class="data-v"
+                    id="mCanonical">—</span></div>
+                <div class="data-item"><span class="data-k">Language</span><span class="data-v" id="mLang">—</span>
+                </div>
               </div>
               <div class="headings-box" id="headingList"></div>
             </div>
@@ -1024,21 +1834,30 @@
             </div>
             <div class="card-body">
               <div class="data-list">
-                <div class="data-item"><span class="data-k">Total Images Found</span><span class="data-v" id="cTotalImg">0</span></div>
-                <div class="data-item"><span class="data-k">Images Missing Alt Attributes</span><span class="data-v" id="cMissingAlt">0</span></div>
+                <div class="data-item"><span class="data-k">Total Images Found</span><span class="data-v"
+                    id="cTotalImg">0</span></div>
+                <div class="data-item"><span class="data-k">Images Missing Alt Attributes</span><span class="data-v"
+                    id="cMissingAlt">0</span></div>
               </div>
             </div>
           </div>
 
           <div class="card">
-            <div class="card-head"><div class="card-title">Content &amp; Link Topology</div></div>
+            <div class="card-head">
+              <div class="card-title">Content &amp; Link Topology</div>
+            </div>
             <div class="card-body">
               <div class="data-list">
-                <div class="data-item"><span class="data-k">Total Word Count</span><span class="data-v" id="cWords">0</span></div>
-                <div class="data-item"><span class="data-k">Estimated Reading Time</span><span class="data-v" id="cRead">0 min</span></div>
-                <div class="data-item"><span class="data-k">Total Hyperlinks</span><span class="data-v" id="cLinks">0</span></div>
-                <div class="data-item"><span class="data-k">Internal Links</span><span class="data-v" id="cInternal">0</span></div>
-                <div class="data-item"><span class="data-k">External Outbound Links</span><span class="data-v" id="cExternal">0</span></div>
+                <div class="data-item"><span class="data-k">Total Word Count</span><span class="data-v"
+                    id="cWords">0</span></div>
+                <div class="data-item"><span class="data-k">Estimated Reading Time</span><span class="data-v"
+                    id="cRead">0 min</span></div>
+                <div class="data-item"><span class="data-k">Total Hyperlinks</span><span class="data-v"
+                    id="cLinks">0</span></div>
+                <div class="data-item"><span class="data-k">Internal Links</span><span class="data-v"
+                    id="cInternal">0</span></div>
+                <div class="data-item"><span class="data-k">External Outbound Links</span><span class="data-v"
+                    id="cExternal">0</span></div>
               </div>
             </div>
           </div>
@@ -1049,18 +1868,24 @@
       <div id="tab-tech" class="tab-pane">
         <div class="grid-2">
           <div class="card">
-            <div class="card-head"><div class="card-title">Detected Frameworks &amp; Libraries</div></div>
+            <div class="card-head">
+              <div class="card-title">Detected Frameworks &amp; Libraries</div>
+            </div>
             <div class="card-body">
               <div class="tech-grid" id="techTags"></div>
             </div>
           </div>
 
           <div class="card">
-            <div class="card-head"><div class="card-title">Server Infrastructure</div></div>
+            <div class="card-head">
+              <div class="card-title">Server Infrastructure</div>
+            </div>
             <div class="card-body">
               <div class="data-list">
-                <div class="data-item"><span class="data-k">Web Server Header</span><span class="data-v" id="tServer">—</span></div>
-                <div class="data-item"><span class="data-k">X-Powered-By</span><span class="data-v" id="tPowered">—</span></div>
+                <div class="data-item"><span class="data-k">Web Server Header</span><span class="data-v"
+                    id="tServer">—</span></div>
+                <div class="data-item"><span class="data-k">X-Powered-By</span><span class="data-v"
+                    id="tPowered">—</span></div>
               </div>
             </div>
           </div>
@@ -1070,7 +1895,9 @@
       <!-- TAB: Recommendations -->
       <div id="tab-recs" class="tab-pane">
         <div class="card grid-1">
-          <div class="card-head"><div class="card-title">Prioritized Actionable Recommendations</div></div>
+          <div class="card-head">
+            <div class="card-title">Prioritized Actionable Recommendations</div>
+          </div>
           <div class="card-body" id="recsBody"></div>
         </div>
       </div>
@@ -1079,44 +1906,62 @@
   </div><!-- /page -->
 
   <!-- MODAL: Compare URLs -->
-  <div class="modal-backdrop" id="compareModal">
+  <div class="modal-backdrop" id="compareModal" onclick="if(event.target===this) closeCompareModal();">
     <div class="modal-box">
       <div class="modal-head">
-        <div class="modal-title">Side-by-Side URL Comparison</div>
-        <button class="btn-close" onclick="closeCompareModal()">&times;</button>
+        <div class="modal-title-wrap">
+          <div class="modal-title">
+            <svg width="20" height="20" fill="none" stroke="#2563eb" stroke-width="2.2" viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+            Side-by-Side Website Benchmark
+          </div>
+          <div class="modal-subtitle">Compare performance waterfall, SSL security, and SEO metrics between two websites</div>
+        </div>
+        <button class="btn-close" onclick="closeCompareModal()" title="Close">&times;</button>
       </div>
       <div class="modal-body">
-        <form onsubmit="event.preventDefault(); runCompare();">
-          <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px;">
-            <input type="text" id="cmpUrl1" class="search-bar" style="width:100%;box-shadow:none;" placeholder="https://example1.com" required>
-            <input type="text" id="cmpUrl2" class="search-bar" style="width:100%;box-shadow:none;" placeholder="https://example2.com" required>
+        <form class="cmp-form" onsubmit="event.preventDefault(); runCompare();">
+          <div class="cmp-inputs-row">
+            <div class="cmp-input-group">
+              <label class="cmp-input-label" for="cmpUrl1"><span class="cmp-tag">A</span> Primary Target URL</label>
+              <input type="url" id="cmpUrl1" class="cmp-field" placeholder="https://github.com" required>
+            </div>
+            <div class="cmp-vs-badge">VS</div>
+            <div class="cmp-input-group">
+              <label class="cmp-input-label" for="cmpUrl2"><span class="cmp-tag cmp-tag-b">B</span> Benchmark / Competitor</label>
+              <input type="url" id="cmpUrl2" class="cmp-field" placeholder="https://google.com" required>
+            </div>
           </div>
-          <button type="submit" id="cmpBtn" class="btn-primary" style="width:100%;justify-content:center;">Compare Now</button>
+          <button type="submit" id="cmpBtn" class="btn-compare-action">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            Run Comparison Benchmark
+          </button>
         </form>
 
-        <div id="compareResults" class="compare-grid" style="display:none;">
-          <div class="compare-col" id="cmpCol1"></div>
-          <div class="compare-col" id="cmpCol2"></div>
-        </div>
+        <div id="compareResults" class="cmp-results-wrap" style="display:none;"></div>
       </div>
     </div>
   </div>
 
   <!-- MODAL: Badge Generator -->
-  <div class="modal-backdrop" id="badgeModal">
-    <div class="modal-box">
+  <div class="modal-backdrop" id="badgeModal" onclick="if(event.target===this) closeBadgeModal();">
+    <div class="modal-box" style="max-width:560px;">
       <div class="modal-head">
-        <div class="modal-title">Embeddable GitHub README Badge</div>
+        <div class="modal-title-wrap">
+          <div class="modal-title">
+            <svg width="18" height="18" fill="none" stroke="#2563eb" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            Embeddable Health Badge
+          </div>
+          <div class="modal-subtitle">Add your live website audit badge to GitHub README or documentation</div>
+        </div>
         <button class="btn-close" onclick="closeBadgeModal()">&times;</button>
       </div>
       <div class="modal-body">
-        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:12px;">Display your live website audit health grade directly in your GitHub README:</p>
-        <div style="text-align:center;margin-bottom:14px;">
-          <img id="badgePreview" src="/api/badge?url=https://github.com" alt="Badge preview" style="height:22px;">
+        <div style="text-align:center;padding:16px 0;background:#f8fafc;border-radius:10px;border:1px solid #e2e8f0;margin-bottom:18px;">
+          <img id="badgePreview" src="/api/badge?url=https://github.com" alt="Badge preview" style="height:24px;">
         </div>
-        <div class="data-item" style="flex-direction:column;align-items:flex-start;gap:6px;">
-          <span class="data-k">Markdown Syntax:</span>
-          <textarea id="badgeMarkdown" readonly style="width:100%;height:60px;font-family:var(--font-mono);font-size:11px;padding:8px;border-radius:6px;border:1px solid var(--border);resize:none;"></textarea>
+        <div class="cmp-input-group">
+          <label class="cmp-input-label">Markdown Snippet</label>
+          <textarea id="badgeMarkdown" readonly style="width:100%;height:68px;font-family:var(--font-mono);font-size:12px;padding:10px;border-radius:8px;border:1.5px solid #cbd5e1;background:#ffffff;resize:none;color:#0f172a;" onclick="this.select();"></textarea>
         </div>
       </div>
     </div>
@@ -1135,7 +1980,7 @@
 
     function getApiUrl(path) {
       const custom = localStorage.getItem('web_analyzer_api_url');
-      if (custom) return custom.replace(/\/$/, '') + path;
+      if (custom) return custom.replace(/\/$/, '—') + path;
       if (window.location.hostname.endsWith('github.io')) {
         return 'https://web-analyzer.onrender.com' + path;
       }
@@ -1218,7 +2063,7 @@
       fill.style.strokeDashoffset = circumference - (score / 100) * circumference;
       fill.style.stroke = scoreColor(score);
 
-      const hostname = (() => { try { return new URL(r.normalized_url).hostname; } catch(e) { return r.url; } })();
+      const hostname = (() => { try { return new URL(r.normalized_url).hostname; } catch (e) { return r.url; } })();
       document.getElementById('ovHostname').textContent = hostname;
       document.getElementById('ovFinalUrl').textContent = r.final_url || r.normalized_url;
 
@@ -1227,48 +2072,48 @@
       sb.textContent = code + ' ' + r.performance.status_text;
       sb.className = 'status-badge ' + (code < 300 ? 'badge-ok' : code < 500 ? 'badge-warn' : 'badge-error');
 
-      document.getElementById('kTtfb').textContent  = r.performance.time_to_first_byte_ms + ' ms';
+      document.getElementById('kTtfb').textContent = r.performance.time_to_first_byte_ms + ' ms';
       document.getElementById('kTotal').textContent = 'Total: ' + r.performance.total_time_ms + ' ms';
 
       const cert = r.security.ssl_certificate;
       if (cert && cert.valid) {
-        document.getElementById('kSsl').textContent    = 'Valid';
+        document.getElementById('kSsl').textContent = 'Valid';
         document.getElementById('kSslDays').textContent = cert.days_remaining + ' days left';
       } else {
-        document.getElementById('kSsl').textContent    = r.security.https ? 'Warning' : 'No HTTPS';
+        document.getElementById('kSsl').textContent = r.security.https ? 'Warning' : 'No HTTPS';
         document.getElementById('kSslDays').textContent = cert && cert.error_message ? cert.error_message : '—';
       }
 
-      const dns = r.security.dns;
+      const dns = (r.security && r.security.dns) ? r.security.dns : {};
       document.getElementById('kDns').textContent = (dns.has_spf && dns.has_dmarc) ? 'Protected' : dns.has_spf ? 'Partial (SPF)' : 'Unprotected';
       document.getElementById('kDnsSub').textContent = dns.has_mx ? 'Active Mail Domain' : 'No Mail Server';
 
       document.getElementById('kSeoScore').textContent = r.seo.score + ' / 100';
-      document.getElementById('kSchemaCount').textContent = (r.structured_data.count || 0) + ' Schema item' + (r.structured_data.count === 1 ? '' : 's');
+      const sCount = (r.structured_data && r.structured_data.count) || 0; document.getElementById('kSchemaCount').textContent = sCount + ' Schema item' + (sCount === 1 ? '—' : 's');
     }
 
     function renderPerf(p) {
       document.getElementById('perfScorePill').textContent = p.score + ' / 100';
-      document.getElementById('tDns').textContent      = p.dns_lookup_time_ms + ' ms';
-      document.getElementById('tTcp').textContent      = p.tcp_connect_time_ms + ' ms';
-      document.getElementById('tTls').textContent      = p.tls_handshake_time_ms + ' ms';
-      document.getElementById('tTtfb').textContent     = p.time_to_first_byte_ms + ' ms';
+      document.getElementById('tDns').textContent = p.dns_lookup_time_ms + ' ms';
+      document.getElementById('tTcp').textContent = p.tcp_connect_time_ms + ' ms';
+      document.getElementById('tTls').textContent = p.tls_handshake_time_ms + ' ms';
+      document.getElementById('tTtfb').textContent = p.time_to_first_byte_ms + ' ms';
       document.getElementById('tDownload').textContent = p.content_download_time_ms + ' ms';
 
       const total = Math.max(p.total_time_ms, 1);
       const pct = (v) => Math.min(100, Math.round((v / total) * 100)) + '%';
-      document.getElementById('bDns').style.width      = pct(p.dns_lookup_time_ms);
-      document.getElementById('bTcp').style.width      = pct(p.tcp_connect_time_ms);
-      document.getElementById('bTls').style.width      = pct(p.tls_handshake_time_ms);
-      document.getElementById('bTtfb').style.width     = pct(p.time_to_first_byte_ms);
+      document.getElementById('bDns').style.width = pct(p.dns_lookup_time_ms);
+      document.getElementById('bTcp').style.width = pct(p.tcp_connect_time_ms);
+      document.getElementById('bTls').style.width = pct(p.tls_handshake_time_ms);
+      document.getElementById('bTtfb').style.width = pct(p.time_to_first_byte_ms);
       document.getElementById('bDownload').style.width = pct(p.content_download_time_ms);
 
-      document.getElementById('dProto').textContent    = p.protocol || '—';
-      document.getElementById('dStatus').textContent   = p.status_code + ' ' + p.status_text;
-      document.getElementById('dTotal').textContent    = p.total_time_ms + ' ms';
-      document.getElementById('dSize').textContent     = p.content_length_formatted;
-      document.getElementById('dComp').textContent     = p.is_compressed ? p.content_encoding : 'None';
-      document.getElementById('dCType').textContent    = p.content_type || '—';
+      document.getElementById('dProto').textContent = p.protocol || '—';
+      document.getElementById('dStatus').textContent = p.status_code + ' ' + p.status_text;
+      document.getElementById('dTotal').textContent = p.total_time_ms + ' ms';
+      document.getElementById('dSize').textContent = p.content_length_formatted;
+      document.getElementById('dComp').textContent = p.is_compressed ? p.content_encoding : 'None';
+      document.getElementById('dCType').textContent = p.content_type || '—';
       document.getElementById('dRedirects').textContent = p.is_redirected ? 'Yes' : 'Direct';
     }
 
@@ -1278,20 +2123,20 @@
       const cert = s.ssl_certificate;
       const sslPill = document.getElementById('sslPill');
       if (cert) {
-        document.getElementById('sCertIssuer').textContent  = cert.issuer || '—';
+        document.getElementById('sCertIssuer').textContent = cert.issuer || '—';
         document.getElementById('sCertSubject').textContent = cert.subject || '—';
-        document.getElementById('sCertDays').textContent    = cert.days_remaining + ' days';
-        document.getElementById('sCertTls').textContent     = cert.tls_version || '—';
-        document.getElementById('sCertCipher').textContent  = cert.cipher_suite || '—';
-        sslPill.textContent  = cert.valid ? 'Valid' : 'Invalid';
-        sslPill.className    = 'pill ' + (cert.valid ? 'pill-pass' : 'pill-fail');
+        document.getElementById('sCertDays').textContent = cert.days_remaining + ' days';
+        document.getElementById('sCertTls').textContent = cert.tls_version || '—';
+        document.getElementById('sCertCipher').textContent = cert.cipher_suite || '—';
+        sslPill.textContent = cert.valid ? 'Valid' : 'Invalid';
+        sslPill.className = 'pill ' + (cert.valid ? 'pill-pass' : 'pill-fail');
       } else {
         sslPill.textContent = 'No SSL';
-        sslPill.className   = 'pill pill-fail';
+        sslPill.className = 'pill pill-fail';
       }
 
       const tbody = document.getElementById('headersBody');
-      tbody.innerHTML = '';
+      tbody.innerHTML = '—';
       const hmap = [
         ['Strict-Transport-Security', s.headers.hsts],
         ['Content-Security-Policy', s.headers.csp],
@@ -1306,7 +2151,7 @@
         tr.innerHTML = `
           <td>
             <div class="hdr-name">${name}</div>
-            <div class="hdr-desc">${h.description || ''}</div>
+            <div class="hdr-desc">${h.description || '—'}</div>
           </td>
           <td><span class="pill pill-${h.status}">${h.status}</span></td>
           <td>
@@ -1331,7 +2176,7 @@
       document.getElementById('cookieSummary').textContent = `${cookies.total_cookies || 0} response cookies detected (${cookies.secure_count || 0} Secure, ${cookies.http_only_count || 0} HttpOnly).`;
 
       const cb = document.getElementById('cookiesBody');
-      cb.innerHTML = '';
+      cb.innerHTML = '—';
       if (!cookies.cookie_details || !cookies.cookie_details.length) {
         cb.innerHTML = '<tr><td colspan="4" style="color:var(--text-muted);">No cookies set in HTTP response headers.</td></tr>';
       } else {
@@ -1349,16 +2194,16 @@
 
     function renderSeo(r) {
       const seo = r.seo;
-      document.getElementById('serpUrl').textContent    = r.final_url || '';
-      document.getElementById('serpTitle').textContent  = seo.title.value || 'No title found';
-      document.getElementById('serpDesc').textContent   = seo.description.value || 'No meta description found.';
+      document.getElementById('serpUrl').textContent = r.final_url || '—';
+      document.getElementById('serpTitle').textContent = seo.title.value || 'No title found';
+      document.getElementById('serpDesc').textContent = seo.description.value || 'No meta description found.';
       document.getElementById('titleCharCount').textContent = seo.title.length || 0;
-      document.getElementById('descCharCount').textContent  = seo.description.length || 0;
+      document.getElementById('descCharCount').textContent = seo.description.length || 0;
 
-      const hostname = (() => { try { return new URL(r.final_url).hostname.toUpperCase(); } catch(e) { return ''; } })();
+      const hostname = (() => { try { return new URL(r.final_url).hostname.toUpperCase(); } catch (e) { return '—'; } })();
       document.getElementById('ogDomain').textContent = hostname;
-      document.getElementById('ogTitle').textContent  = seo.open_graph.title || seo.title.value || 'No title';
-      document.getElementById('ogDesc').textContent   = seo.open_graph.description || seo.description.value || '—';
+      document.getElementById('ogTitle').textContent = seo.open_graph.title || seo.title.value || 'No title';
+      document.getElementById('ogDesc').textContent = seo.open_graph.description || seo.description.value || '—';
 
       const imgWrap = document.getElementById('ogImgWrap');
       if (seo.open_graph.image) {
@@ -1369,7 +2214,7 @@
 
       // Schema structured data
       const struct = r.structured_data || { count: 0, items: [] };
-      document.getElementById('schemaCountPill').textContent = struct.count + ' Schema' + (struct.count === 1 ? '' : 's');
+      document.getElementById('schemaCountPill').textContent = struct.count + ' Schema' + (struct.count === 1 ? '—' : 's');
       const sb = document.getElementById('schemaBody');
       if (struct.count > 0) {
         sb.innerHTML = struct.items.map(item => `
@@ -1380,19 +2225,19 @@
             </div>
             <div class="schema-raw">${esc(item.raw_snippet)}</div>
           </div>
-        `).join('');
+        `).join('—');
       } else {
         sb.innerHTML = '<span style="font-size:13px;color:var(--text-muted)">No JSON-LD structured data detected.</span>';
       }
 
       // Discovery & Headings
-      document.getElementById('mRobotsTxt').innerHTML = seo.discovery.has_robots_txt ? '<span class="pill pill-pass">Available</span>' : '<span class="pill pill-warn">404 Not Found</span>';
-      document.getElementById('mSitemap').innerHTML   = seo.discovery.has_sitemap ? '<span class="pill pill-pass">Available</span>' : '<span class="pill pill-warn">404 Not Found</span>';
-      document.getElementById('mCanonical').textContent = seo.canonical.value || 'Not specified';
-      document.getElementById('mLang').textContent      = seo.language || 'Not declared';
+      const disc = seo.discovery || {}; document.getElementById('mRobotsTxt').innerHTML = disc.has_robots_txt ? '<span class="pill pill-pass">Available</span>' : '<span class="pill pill-warn">404 Not Found</span>';
+      document.getElementById('mSitemap').innerHTML = disc.has_sitemap ? '<span class="pill pill-pass">Available</span>' : '<span class="pill pill-warn">404 Not Found</span>';
+      document.getElementById('mCanonical').textContent = (seo.canonical && seo.canonical.value) || 'Not specified';
+      document.getElementById('mLang').textContent = seo.language || 'Not declared';
 
       const hl = document.getElementById('headingList');
-      hl.innerHTML = '';
+      hl.innerHTML = '—';
       (seo.h1_list || []).forEach(t => {
         hl.innerHTML += `<div class="heading-item"><span class="h-tag">H1</span><span class="h-text">${esc(t)}</span></div>`;
       });
@@ -1410,18 +2255,18 @@
       const ap = document.getElementById('altPill');
       if (c.images_missing_alt === 0) { ap.textContent = 'All images have alt text'; ap.className = 'pill pill-pass'; }
       else { ap.textContent = c.images_missing_alt + ' missing'; ap.className = 'pill pill-warn'; }
-      document.getElementById('cWords').textContent    = c.word_count + ' words';
-      document.getElementById('cRead').textContent     = '~' + c.reading_time_minutes + ' min';
-      document.getElementById('cLinks').textContent    = c.total_links;
+      document.getElementById('cWords').textContent = c.word_count + ' words';
+      document.getElementById('cRead').textContent = '~' + c.reading_time_minutes + ' min';
+      document.getElementById('cLinks').textContent = c.total_links;
       document.getElementById('cInternal').textContent = c.internal_links;
       document.getElementById('cExternal').textContent = c.external_links;
     }
 
     function renderTech(t) {
-      document.getElementById('tServer').textContent  = t.server || 'Not disclosed';
+      document.getElementById('tServer').textContent = t.server || 'Not disclosed';
       document.getElementById('tPowered').textContent = t.powered_by || 'Not disclosed';
       const tags = document.getElementById('techTags');
-      tags.innerHTML = '';
+      tags.innerHTML = '—';
       if ((t.detected_stack || []).length) {
         t.detected_stack.forEach(s => { tags.innerHTML += `<div class="tech-tag">${esc(s)}</div>`; });
       } else {
@@ -1447,7 +2292,7 @@
             <div class="rec-desc">${esc(r.description)}</div>
             <div class="rec-action"><strong>How to fix:</strong> ${esc(r.action)}</div>
           </div>
-        </div>`).join('');
+        </div>`).join('—');
     }
 
     function switchTab(id) {
@@ -1463,7 +2308,7 @@
       if (!currentReport) return;
       const a = document.createElement('a');
       a.href = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(currentReport, null, 2));
-      a.download = 'audit-' + ((() => { try { return new URL(currentReport.normalized_url).hostname; } catch(e) { return 'report'; } })()) + '.json';
+      a.download = 'audit-' + ((() => { try { return new URL(currentReport.normalized_url).hostname; } catch (e) { return 'report'; } })()) + '.json';
       a.click();
     }
 
@@ -1480,32 +2325,111 @@
       const u1 = document.getElementById('cmpUrl1').value.trim();
       const u2 = document.getElementById('cmpUrl2').value.trim();
       const btn = document.getElementById('cmpBtn');
+      const resultsDiv = document.getElementById('compareResults');
+
       btn.disabled = true;
-      btn.textContent = 'Comparing...';
+      btn.innerHTML = '<span style="display:inline-block;animation:spin 1s linear infinite;">⟳</span> Benchmarking both targets...';
 
       try {
-        const res = await fetch(getApiUrl(`/api/compare?url1=${encodeURIComponent(u1)}&url2=${encodeURIComponent(u2)}`));
-        if (!res.ok) throw new Error('Comparison failed');
-        const data = await res.json();
-        
-        document.getElementById('compareResults').style.display = 'grid';
-        document.getElementById('cmpCol1').innerHTML = `
-          <h4 style="font-size:15px;margin-bottom:8px;">${esc(u1)}</h4>
-          <div style="font-size:28px;font-weight:800;color:${scoreColor(data.target1.overall_score)}">${data.target1.overall_score}/100 [${data.target1.grade}]</div>
-          <div style="font-size:12px;margin-top:6px;">TTFB: <strong>${data.target1.performance.time_to_first_byte_ms}ms</strong></div>
-          <div style="font-size:12px;">SSL: <strong>${data.target1.security.ssl_certificate ? data.target1.security.ssl_certificate.tls_version : 'N/A'}</strong></div>
-        `;
-        document.getElementById('cmpCol2').innerHTML = `
-          <h4 style="font-size:15px;margin-bottom:8px;">${esc(u2)}</h4>
-          <div style="font-size:28px;font-weight:800;color:${scoreColor(data.target2.overall_score)}">${data.target2.overall_score}/100 [${data.target2.grade}]</div>
-          <div style="font-size:12px;margin-top:6px;">TTFB: <strong>${data.target2.performance.time_to_first_byte_ms}ms</strong></div>
-          <div style="font-size:12px;">SSL: <strong>${data.target2.security.ssl_certificate ? data.target2.security.ssl_certificate.tls_version : 'N/A'}</strong></div>
+        let t1, t2;
+        // Try dedicated compare endpoint first, fallback to parallel analyze calls
+        try {
+          const res = await fetch(getApiUrl(`/api/compare?url1=${encodeURIComponent(u1)}&url2=${encodeURIComponent(u2)}`));
+          if (res.ok) {
+            const data = await res.json();
+            t1 = data.target1;
+            t2 = data.target2;
+          }
+        } catch (e) { }
+
+        if (!t1 || !t2) {
+          const [res1, res2] = await Promise.all([
+            fetch(getApiUrl(`/api/analyze?url=${encodeURIComponent(u1)}`)),
+            fetch(getApiUrl(`/api/analyze?url=${encodeURIComponent(u2)}`))
+          ]);
+          if (!res1.ok || !res2.ok) throw new Error('One or both URLs failed to analyze.');
+          t1 = await res1.json();
+          t2 = await res2.json();
+        }
+
+        const ttfb1 = (t1.performance && t1.performance.time_to_first_byte_ms) || 0;
+        const ttfb2 = (t2.performance && t2.performance.time_to_first_byte_ms) || 0;
+        const total1 = (t1.performance && t1.performance.total_time_ms) || 0;
+        const total2 = (t2.performance && t2.performance.total_time_ms) || 0;
+        const cert1 = t1.security && t1.security.ssl_certificate ? t1.security.ssl_certificate.tls_version : (t1.security && t1.security.https ? 'HTTPS' : 'None');
+        const cert2 = t2.security && t2.security.ssl_certificate ? t2.security.ssl_certificate.tls_version : (t2.security && t2.security.https ? 'HTTPS' : 'None');
+        const perf1 = (t1.performance && t1.performance.score) || 0;
+        const perf2 = (t2.performance && t2.performance.score) || 0;
+        const sec1 = (t1.security && t1.security.score) || 0;
+        const sec2 = (t2.security && t2.security.score) || 0;
+        const seo1 = (t1.seo && t1.seo.score) || 0;
+        const seo2 = (t2.seo && t2.seo.score) || 0;
+
+        const host1 = (() => { try { return new URL(u1).hostname.replace(/^www\./, '—'); } catch (e) { return u1; } })();
+        const host2 = (() => { try { return new URL(u2).hostname.replace(/^www\./, '—'); } catch (e) { return u2; } })();
+
+        resultsDiv.style.display = 'block';
+        resultsDiv.innerHTML = `
+          <div class="cmp-grid-cards">
+            <div class="cmp-col-card">
+              <div class="cmp-card-url"><span class="cmp-tag">A</span> ${esc(u1)}</div>
+              <div class="cmp-card-score" style="color:${scoreColor(t1.overall_score)}">${t1.overall_score}<span style="font-size:14px;color:var(--text-muted);">/100</span></div>
+              <span class="pill ${gradeClass(t1.grade)}">Grade ${t1.grade}</span>
+            </div>
+            <div class="cmp-col-card">
+              <div class="cmp-card-url"><span class="cmp-tag cmp-tag-b">B</span> ${esc(u2)}</div>
+              <div class="cmp-card-score" style="color:${scoreColor(t2.overall_score)}">${t2.overall_score}<span style="font-size:14px;color:var(--text-muted);">/100</span></div>
+              <span class="pill ${gradeClass(t2.grade)}">Grade ${t2.grade}</span>
+            </div>
+          </div>
+
+          <table class="cmp-table">
+            <thead>
+              <tr>
+                <th>Diagnostic Metric</th>
+                <th>Target A (${esc(host1)})</th>
+                <th>Target B (${esc(host2)})</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>TTFB Latency</strong></td>
+                <td class="${ttfb1 <= ttfb2 ? 'cmp-winner' : ''}">${ttfb1} ms ${ttfb1 <= ttfb2 ? '⚡' : ''}</td>
+                <td class="${ttfb2 < ttfb1 ? 'cmp-winner' : ''}">${ttfb2} ms ${ttfb2 < ttfb1 ? '⚡' : ''}</td>
+              </tr>
+              <tr>
+                <td><strong>Total Load Time</strong></td>
+                <td class="${total1 <= total2 ? 'cmp-winner' : ''}">${total1} ms</td>
+                <td class="${total2 < total1 ? 'cmp-winner' : ''}">${total2} ms</td>
+              </tr>
+              <tr>
+                <td><strong>Performance Score</strong></td>
+                <td>${perf1} / 100</td>
+                <td>${perf2} / 100</td>
+              </tr>
+              <tr>
+                <td><strong>Security &amp; SSL</strong></td>
+                <td>${sec1} / 100 <span style="color:var(--text-muted);font-size:11px;">(${esc(cert1)})</span></td>
+                <td>${sec2} / 100 <span style="color:var(--text-muted);font-size:11px;">(${esc(cert2)})</span></td>
+              </tr>
+              <tr>
+                <td><strong>SEO Score</strong></td>
+                <td>${seo1} / 100</td>
+                <td>${seo2} / 100</td>
+              </tr>
+              <tr>
+                <td><strong>Payload Weight</strong></td>
+                <td>${(t1.performance && t1.performance.content_length_formatted) || '�'}</td>
+                <td>${(t2.performance && t2.performance.content_length_formatted) || '�'}</td>
+              </tr>
+            </tbody>
+          </table>
         `;
       } catch (err) {
-        alert(err.message);
+        alert('Comparison error: ' + err.message);
       } finally {
         btn.disabled = false;
-        btn.textContent = 'Compare Now';
+        btn.innerHTML = '<svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg> Run Comparison Benchmark';
       }
     }
 
@@ -1531,9 +2455,10 @@
       return '#ef4444';
     }
     function esc(s) {
-      if (!s) return '';
-      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      if (!s) return '—';
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
   </script>
 </body>
+
 </html>
