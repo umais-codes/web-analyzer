@@ -66,7 +66,7 @@ func CalculateScores(report *model.AnalysisReport) {
 	// 2. Security Score
 	secScore := 0
 	if report.Security.HTTPS {
-		secScore += 25
+		secScore += 20
 	} else {
 		recs = append(recs, model.Recommendation{
 			Category:    "Security",
@@ -78,7 +78,7 @@ func CalculateScores(report *model.AnalysisReport) {
 	}
 
 	if report.Security.SSLCertificate != nil && report.Security.SSLCertificate.Valid {
-		secScore += 20
+		secScore += 15
 		if report.Security.SSLCertificate.DaysRemaining < 15 {
 			recs = append(recs, model.Recommendation{
 				Category:    "Security",
@@ -150,20 +150,58 @@ func CalculateScores(report *model.AnalysisReport) {
 		})
 	}
 
-	if h.ReferrerPolicy.Status == "pass" {
+	// DNS & Email Hygiene Checks
+	if report.Security.DNS.HasSPF {
 		secScore += 5
+	} else if report.Security.DNS.HasMX {
+		recs = append(recs, model.Recommendation{
+			Category:    "Security",
+			Priority:    "medium",
+			Title:       "Missing SPF DNS Record",
+			Description: "Domain has active email (MX) records but no SPF record configured.",
+			Action:      "Publish a TXT record with 'v=spf1 ...' to prevent email address spoofing.",
+		})
 	}
+
+	if report.Security.DNS.HasDMARC {
+		secScore += 5
+	} else if report.Security.DNS.HasMX {
+		recs = append(recs, model.Recommendation{
+			Category:    "Security",
+			Priority:    "medium",
+			Title:       "Missing DMARC Email Security Policy",
+			Description: "DMARC helps protect against email phishing and executive impersonation.",
+			Action:      "Configure a DMARC policy at '_dmarc.yourdomain.com'.",
+		})
+	}
+
+	if len(report.Security.Cookies.Issues) > 0 {
+		secScore -= 5
+		for _, issue := range report.Security.Cookies.Issues {
+			recs = append(recs, model.Recommendation{
+				Category:    "Security",
+				Priority:    "medium",
+				Title:       "Insecure Cookie Flag",
+				Description: issue,
+				Action:      "Ensure all sensitive cookies specify 'Secure; HttpOnly; SameSite=Lax'.",
+			})
+		}
+	}
+
 	if secScore > 100 {
 		secScore = 100
+	}
+	if secScore < 0 {
+		secScore = 0
 	}
 	report.Security.Score = secScore
 
 	// 3. SEO Score
 	seoScore := 0
 	if report.SEO.Title.Status == "good" {
-		seoScore += 25
+		seoScore += 20
 	} else if report.SEO.Title.Status == "warning" {
-		seoScore += 15
+		seoScore += 10
 		recs = append(recs, model.Recommendation{
 			Category:    "SEO",
 			Priority:    "low",
@@ -182,9 +220,9 @@ func CalculateScores(report *model.AnalysisReport) {
 	}
 
 	if report.SEO.Description.Status == "good" {
-		seoScore += 25
+		seoScore += 20
 	} else if report.SEO.Description.Status == "warning" {
-		seoScore += 15
+		seoScore += 10
 		recs = append(recs, model.Recommendation{
 			Category:    "SEO",
 			Priority:    "medium",
@@ -203,7 +241,7 @@ func CalculateScores(report *model.AnalysisReport) {
 	}
 
 	if report.SEO.Viewport.Status == "good" {
-		seoScore += 20
+		seoScore += 15
 	} else {
 		recs = append(recs, model.Recommendation{
 			Category:    "SEO",
@@ -226,29 +264,29 @@ func CalculateScores(report *model.AnalysisReport) {
 		})
 	} else {
 		seoScore += 10
-		recs = append(recs, model.Recommendation{
-			Category:    "SEO",
-			Priority:    "low",
-			Title:       "Multiple H1 Headings Detected",
-			Description: fmt.Sprintf("Found %d <h1> tags on page. Best practice is having exactly one.", report.SEO.H1Count),
-			Action:      "Consolidate to one primary <h1> and use <h2>/<h3> for sub-sections.",
-		})
 	}
 
 	if report.SEO.Canonical.Status == "good" {
 		seoScore += 10
 	}
 
-	if report.SEO.OpenGraph.Title != "" && report.SEO.OpenGraph.Image != "" {
-		seoScore += 5
+	if report.StructuredData.Present {
+		seoScore += 10
 	} else {
 		recs = append(recs, model.Recommendation{
 			Category:    "SEO",
 			Priority:    "low",
-			Title:       "Incomplete Open Graph Social Metadata",
-			Description: "Missing og:title or og:image reduces visibility when shared on social platforms.",
-			Action:      "Add Open Graph meta tags (og:title, og:image, og:description) to control social preview cards.",
+			Title:       "No Structured Data (Schema.org / JSON-LD)",
+			Description: "Rich snippets and Schema.org markup enhance organic search visibility.",
+			Action:      "Add JSON-LD structured data (e.g. WebSite, Organization, Article) into your HTML <head>.",
 		})
+	}
+
+	if report.SEO.Discovery.HasRobotsTxt {
+		seoScore += 5
+	}
+	if report.SEO.Discovery.HasSitemap {
+		seoScore += 5
 	}
 
 	if seoScore > 100 {
@@ -288,7 +326,6 @@ func CalculateScores(report *model.AnalysisReport) {
 	report.Content.Score = contentScore
 
 	// Overall Score Calculation (Weighted)
-	// Perf: 25%, Security: 35%, SEO: 25%, Content: 15%
 	overall := int(math.Round(
 		float64(report.Performance.Score)*0.25 +
 			float64(report.Security.Score)*0.35 +

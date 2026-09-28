@@ -42,6 +42,13 @@ func TestExtractSEOAndContent(t *testing.T) {
 		<meta property="og:title" content="OpenGraph Title Sample">
 		<meta property="og:image" content="https://example.com/og.jpg">
 		<link rel="canonical" href="https://example.com">
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "Organization",
+			"name": "Web Analyzer"
+		}
+		</script>
 	</head>
 	<body>
 		<h1>Primary Page Headline</h1>
@@ -57,7 +64,7 @@ func TestExtractSEOAndContent(t *testing.T) {
 	</html>
 	`
 
-	seo, content, _ := ExtractSEOAndContent(sampleHTML, "https://example.com")
+	seo, content, _, structData := ExtractSEOAndContent(sampleHTML, "https://example.com")
 
 	if !strings.Contains(seo.Title.Value, "Professional Web Analyzer") {
 		t.Errorf("expected title to match, got %q", seo.Title.Value)
@@ -83,6 +90,12 @@ func TestExtractSEOAndContent(t *testing.T) {
 	if content.ExternalLinks != 1 {
 		t.Errorf("expected 1 external link, got %d", content.ExternalLinks)
 	}
+	if !structData.Present || structData.Count != 1 {
+		t.Errorf("expected 1 structured data item, got %d", structData.Count)
+	}
+	if len(structData.SchemaTypes) == 0 || structData.SchemaTypes[0] != "Organization" {
+		t.Errorf("expected Organization schema type, got %v", structData.SchemaTypes)
+	}
 }
 
 func TestCalculateScores(t *testing.T) {
@@ -104,6 +117,10 @@ func TestCalculateScores(t *testing.T) {
 				XFrameOptions:       model.HeaderItem{Status: "pass"},
 				XContentTypeOptions: model.HeaderItem{Status: "pass"},
 			},
+			DNS: model.DNSReport{
+				HasSPF:   true,
+				HasDMARC: true,
+			},
 		},
 		SEO: model.SEOReport{
 			Title:       model.SEOItem{Status: "good"},
@@ -112,6 +129,14 @@ func TestCalculateScores(t *testing.T) {
 			H1Count:     1,
 			Canonical:   model.SEOItem{Status: "good"},
 			OpenGraph:   model.OpenGraphData{Title: "Title", Image: "img.png"},
+			Discovery: model.CrawlDiscovery{
+				HasRobotsTxt: true,
+				HasSitemap:   true,
+			},
+		},
+		StructuredData: model.StructuredDataReport{
+			Present: true,
+			Count:   1,
 		},
 		Content: model.ContentReport{
 			TotalImages:      5,

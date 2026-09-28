@@ -1,11 +1,14 @@
 package analyzer
 
 import (
+	"encoding/json"
 	"html"
 	"math"
+	"net/http"
 	"net/url"
 	"regexp"
 	"strings"
+	"time"
 
 	"github.com/umais-codes/web-analyzer/internal/model"
 )
@@ -21,6 +24,7 @@ var (
 	imgRegex       = regexp.MustCompile(`(?i)<img\s+([^>]+)>`)
 	aHrefRegex     = regexp.MustCompile(`(?i)<a\s+[^>]*href\s*=\s*["']([^"']+)["'][^>]*>`)
 	scriptReg      = regexp.MustCompile(`(?is)<script[^>]*>.*?<\/script>`)
+	jsonLdReg      = regexp.MustCompile(`(?is)<script\s+[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>`)
 	styleReg       = regexp.MustCompile(`(?is)<style[^>]*>.*?<\/style>`)
 	svgReg         = regexp.MustCompile(`(?is)<svg[^>]*>.*?<\/svg>`)
 	noscriptReg    = regexp.MustCompile(`(?is)<noscript[^>]*>.*?<\/noscript>`)
@@ -30,7 +34,7 @@ var (
 )
 
 // ExtractSEOAndContent parses HTML text and extracts rich SEO, content, and tech fingerprint metrics.
-func ExtractSEOAndContent(htmlBody string, pageURL string) (model.SEOReport, model.ContentReport, model.TechnologyReport) {
+func ExtractSEOAndContent(htmlBody string, pageURL string) (model.SEOReport, model.ContentReport, model.TechnologyReport, model.StructuredDataReport) {
 	seo := model.SEOReport{
 		H1List: []string{},
 		H2List: []string{},
@@ -41,6 +45,7 @@ func ExtractSEOAndContent(htmlBody string, pageURL string) (model.SEOReport, mod
 	tech := model.TechnologyReport{
 		DetectedStack: []string{},
 	}
+	structData := ExtractStructuredData(htmlBody)
 
 	baseParsed, _ := url.Parse(pageURL)
 	baseDomain := ""
@@ -219,7 +224,10 @@ func ExtractSEOAndContent(htmlBody string, pageURL string) (model.SEOReport, mod
 	h3Matches := h3Regex.FindAllStringSubmatch(htmlBody, -1)
 	seo.H3Count = len(h3Matches)
 
-	// 6. Image Analysis (Alt tags)
+	// 6. Crawl Discovery (robots.txt & sitemap.xml)
+	seo.Discovery = CheckCrawlDiscovery(pageURL)
+
+	// 7. Image Analysis (Alt tags)
 	imgMatches := imgRegex.FindAllStringSubmatch(htmlBody, -1)
 	content.TotalImages = len(imgMatches)
 	missingAltCount := 0
@@ -244,7 +252,7 @@ func ExtractSEOAndContent(htmlBody string, pageURL string) (model.SEOReport, mod
 	}
 	content.ImagesMissingAlt = missingAltCount
 
-	// 7. Links Analysis (Internal vs External)
+	// 8. Links Analysis (Internal vs External)
 	linkMatches2 := aHrefRegex.FindAllStringSubmatch(htmlBody, -1)
 	content.TotalLinks = len(linkMatches2)
 	internalCount := 0
@@ -270,7 +278,7 @@ func ExtractSEOAndContent(htmlBody string, pageURL string) (model.SEOReport, mod
 	content.InternalLinks = internalCount
 	content.ExternalLinks = externalCount
 
-	// 8. Word Count & Reading Time
+	// 9. Word Count & Reading Time
 	textContent := scriptReg.ReplaceAllString(htmlBody, " ")
 	textContent = styleReg.ReplaceAllString(textContent, " ")
 	textContent = svgReg.ReplaceAllString(textContent, " ")
@@ -285,7 +293,7 @@ func ExtractSEOAndContent(htmlBody string, pageURL string) (model.SEOReport, mod
 		content.ReadingTimeMinutes = 1
 	}
 
-	// 9. Tech Stack Fingerprinting
+	// 10. Tech Stack Fingerprinting
 	lowerBody := strings.ToLower(htmlBody)
 	if strings.Contains(lowerBody, "wp-content") || strings.Contains(lowerBody, "wp-includes") {
 		tech.DetectedStack = appendStack(tech.DetectedStack, "WordPress")
@@ -318,7 +326,79 @@ func ExtractSEOAndContent(htmlBody string, pageURL string) (model.SEOReport, mod
 		tech.DetectedStack = appendStack(tech.DetectedStack, "Cloudflare")
 	}
 
-	return seo, content, tech
+	return seo, content, tech, structData
+}
+
+// ExtractStructuredData extracts and parses JSON-LD schemas from HTML.
+func ExtractStructuredData(htmlBody string) model.StructuredDataReport {
+	report := model.StructuredDataReport{
+		SchemaTypes: []string{},
+		Items:       []model.JSONLDSummary{},
+	}
+
+	matches := jsonLdReg.FindAllStringSubmatch(htmlBody, -1)
+	for _, m := range matches {
+		if len(m) < 2 {
+			continue
+		}
+		rawJSON := strings.TrimSpace(m[1])
+		if rawJSON == "" {
+			continue
+		}
+
+		var parsed map[string]interface{}
+		if err := json.Unmarshal([]byte(rawJSON), &parsed); err == nil {
+			typeVal, _ := parsed["@type"].(string)
+			contextVal, _ := parsed["@context"].(string)
+			nameVal, _ := parsed["name"].(string)
+
+			if typeVal != "" {
+				report.SchemaTypes = appendStack(report.SchemaTypes, typeVal)
+				summary := model.JSONLDSummary{
+					Type:       typeVal,
+					Context:    contextVal,
+					Name:       nameVal,
+					RawSnippet: truncateString(rawJSON, 120),
+				}
+				report.Items = append(report.Items, summary)
+			}
+		}
+	}
+
+	report.Count = len(report.Items)
+	report.Present = report.Count > 0
+	return report
+}
+
+// CheckCrawlDiscovery checks if robots.txt or sitemap.xml exist.
+func CheckCrawlDiscovery(pageURL string) model.CrawlDiscovery {
+	discovery := model.CrawlDiscovery{}
+	u, err := url.Parse(pageURL)
+	if err != nil {
+		return discovery
+	}
+
+	baseURL := fmt.Sprintf("%s://%s", u.Scheme, u.Host)
+	discovery.RobotsTxtURL = baseURL + "/robots.txt"
+	discovery.SitemapURL = baseURL + "/sitemap.xml"
+
+	client := &http.Client{Timeout: 3 * time.Second}
+
+	// Quick HEAD / GET check for robots.txt
+	respRobots, err := client.Get(discovery.RobotsTxtURL)
+	if err == nil && respRobots.StatusCode == http.StatusOK {
+		discovery.HasRobotsTxt = true
+		_ = respRobots.Body.Close()
+	}
+
+	// Quick check for sitemap.xml
+	respSitemap, err := client.Get(discovery.SitemapURL)
+	if err == nil && respSitemap.StatusCode == http.StatusOK {
+		discovery.HasSitemap = true
+		_ = respSitemap.Body.Close()
+	}
+
+	return discovery
 }
 
 func parseAttributes(tagContent string) map[string]string {
@@ -361,4 +441,11 @@ func resolveURL(base, ref string) string {
 		return ref
 	}
 	return baseURL.ResolveReference(refURL).String()
+}
+
+func truncateString(s string, max int) string {
+	if len(s) <= max {
+		return s
+	}
+	return s[:max] + "..."
 }

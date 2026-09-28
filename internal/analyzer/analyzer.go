@@ -57,12 +57,12 @@ func Analyze(rawURL string) (*model.AnalysisReport, error) {
 
 	// Trace network metrics
 	var (
-		dnsStart, dnsDone       time.Time
-		connStart, connDone     time.Time
-		tlsStart, tlsDone       time.Time
-		gotFirstByte            time.Time
-		reqStart                time.Time
-		mu                      sync.Mutex
+		dnsStart, dnsDone   time.Time
+		connStart, connDone time.Time
+		tlsStart, tlsDone   time.Time
+		gotFirstByte        time.Time
+		reqStart            time.Time
+		mu                  sync.Mutex
 	)
 
 	trace := &httptrace.ClientTrace{
@@ -202,6 +202,12 @@ func Analyze(rawURL string) (*model.AnalysisReport, error) {
 	// Security Headers Audit
 	report.Security.Headers = AuditSecurityHeaders(resp.Header)
 
+	// DNS Hygiene & Email Security Audit
+	report.Security.DNS = InspectDNS(report.FinalURL)
+
+	// Cookie Security Audit
+	report.Security.Cookies = InspectCookies(resp.Cookies())
+
 	// Receive SSL cert result
 	sslRes := <-sslChan
 	if sslRes.info != nil {
@@ -227,9 +233,10 @@ func Analyze(rawURL string) (*model.AnalysisReport, error) {
 	}
 
 	htmlString := string(htmlBytes)
-	seoReport, contentReport, techReport := ExtractSEOAndContent(htmlString, report.FinalURL)
+	seoReport, contentReport, techReport, structData := ExtractSEOAndContent(htmlString, report.FinalURL)
 
 	report.SEO = seoReport
+	report.StructuredData = structData
 	report.Content = contentReport
 
 	// Add Server & Powered-By headers to TechReport

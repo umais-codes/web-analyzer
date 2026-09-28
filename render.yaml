@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: web-analyzer
+    runtime: go
+    plan: free
+    region: oregon
+    buildCommand: go build -o web-analyzer main.go
+    startCommand: ./web-analyzer -serve
+    envVars:
+      - key: PORT
+        value: 10000

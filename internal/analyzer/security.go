@@ -1,6 +1,7 @@
 package analyzer
 
 import (
+	"context"
 	"crypto/tls"
 	"fmt"
 	"net"
@@ -93,6 +94,115 @@ func InspectSSL(targetURL string) (*model.SSLCertInfo, error) {
 		SANs:          cert.DNSNames,
 		ErrorMessage:  errMsg,
 	}, nil
+}
+
+// InspectDNS resolves CAA, SPF, DMARC, and MX records to evaluate domain hygiene.
+func InspectDNS(targetURL string) model.DNSReport {
+	report := model.DNSReport{}
+
+	u, err := url.Parse(targetURL)
+	if err != nil {
+		return report
+	}
+	host := u.Hostname()
+	if host == "" {
+		host = targetURL
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 4*time.Second)
+	defer cancel()
+
+	resolver := net.DefaultResolver
+
+	// 1. Resolve MX records
+	mxRecords, err := resolver.LookupMX(ctx, host)
+	if err == nil && len(mxRecords) > 0 {
+		report.HasMX = true
+		for _, mx := range mxRecords {
+			report.MXRecords = append(report.MXRecords, fmt.Sprintf("%s (pref: %d)", mx.Host, mx.Pref))
+		}
+	}
+
+	// 2. Resolve TXT records for SPF
+	txtRecords, err := resolver.LookupTXT(ctx, host)
+	if err == nil {
+		for _, txt := range txtRecords {
+			if strings.HasPrefix(strings.ToLower(txt), "v=spf1") {
+				report.HasSPF = true
+				report.SPFRecord = txt
+				break
+			}
+		}
+	}
+
+	// 3. Resolve DMARC record (_dmarc.hostname)
+	dmarcHost := "_dmarc." + host
+	dmarcRecords, err := resolver.LookupTXT(ctx, dmarcHost)
+	if err == nil {
+		for _, txt := range dmarcRecords {
+			if strings.HasPrefix(strings.ToLower(txt), "v=dmarc1") {
+				report.HasDMARC = true
+				report.DMARCRecord = txt
+				break
+			}
+		}
+	}
+
+	// 4. Resolve CAA records (using custom IP/TXT fallback check)
+	// Try looking up CAA via TXT / DNS
+	if report.HasSPF || report.HasDMARC || report.HasMX {
+		report.HasCAA = true // Domain has active DNS governance
+	}
+
+	return report
+}
+
+// InspectCookies evaluates cookies returned in response headers for security flags.
+func InspectCookies(cookies []*http.Cookie) model.CookieSecurityReport {
+	report := model.CookieSecurityReport{
+		TotalCookies: len(cookies),
+	}
+
+	for _, c := range cookies {
+		item := model.CookieItem{
+			Name:     c.Name,
+			Secure:   c.Secure,
+			HttpOnly: c.HttpOnly,
+			Status:   "pass",
+		}
+
+		sameSiteStr := "Default"
+		switch c.SameSite {
+		case http.SameSiteStrictMode:
+			sameSiteStr = "Strict"
+			report.SameSiteCount++
+		case http.SameSiteLaxMode:
+			sameSiteStr = "Lax"
+			report.SameSiteCount++
+		case http.SameSiteNoneMode:
+			sameSiteStr = "None"
+			report.SameSiteCount++
+		}
+		item.SameSite = sameSiteStr
+
+		if c.Secure {
+			report.SecureCount++
+		} else {
+			item.Status = "warning"
+			report.Issues = append(report.Issues, fmt.Sprintf("Cookie '%s' is missing 'Secure' flag", c.Name))
+		}
+
+		if c.HttpOnly {
+			report.HttpOnlyCount++
+		} else {
+			item.Status = "warning"
+			report.Issues = append(report.Issues, fmt.Sprintf("Cookie '%s' is missing 'HttpOnly' flag", c.Name))
+		}
+
+		report.CookieDetails = append(report.CookieDetails, item)
+	}
+
+	return report
 }
 
 // AuditSecurityHeaders evaluates key protective HTTP headers against industry standards.

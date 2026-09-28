@@ -4,21 +4,22 @@ import "time"
 
 // AnalysisReport represents the complete analysis result of a website.
 type AnalysisReport struct {
-	URL                 string             `json:"url"`
-	NormalizedURL       string             `json:"normalized_url"`
-	FinalURL            string             `json:"final_url"`
-	IsRedirected        bool               `json:"is_redirected"`
-	RedirectChain       []RedirectHop      `json:"redirect_chain"`
-	Timestamp           time.Time          `json:"timestamp"`
-	OverallScore        int                `json:"overall_score"`
-	Grade               string             `json:"grade"`
-	ExecutionDurationMs int64              `json:"execution_duration_ms"`
-	Performance         PerformanceMetrics `json:"performance"`
-	Security            SecurityReport     `json:"security"`
-	SEO                 SEOReport          `json:"seo"`
-	Content             ContentReport      `json:"content"`
-	Technology          TechnologyReport   `json:"technology"`
-	Recommendations     []Recommendation   `json:"recommendations"`
+	URL                 string               `json:"url"`
+	NormalizedURL       string               `json:"normalized_url"`
+	FinalURL            string               `json:"final_url"`
+	IsRedirected        bool                 `json:"is_redirected"`
+	RedirectChain       []RedirectHop        `json:"redirect_chain"`
+	Timestamp           time.Time            `json:"timestamp"`
+	OverallScore        int                  `json:"overall_score"`
+	Grade               string               `json:"grade"`
+	ExecutionDurationMs int64                `json:"execution_duration_ms"`
+	Performance         PerformanceMetrics   `json:"performance"`
+	Security            SecurityReport       `json:"security"`
+	SEO                 SEOReport            `json:"seo"`
+	StructuredData      StructuredDataReport `json:"structured_data"`
+	Content             ContentReport        `json:"content"`
+	Technology          TechnologyReport     `json:"technology"`
+	Recommendations     []Recommendation     `json:"recommendations"`
 }
 
 // RedirectHop stores info for each redirection step.
@@ -46,13 +47,46 @@ type PerformanceMetrics struct {
 	IsCompressed           bool   `json:"is_compressed"`
 }
 
-// SecurityReport details SSL/TLS and security headers.
+// SecurityReport details SSL/TLS, DNS hygiene, email security, and security headers.
 type SecurityReport struct {
 	Score          int                  `json:"score"`
 	HTTPS          bool                 `json:"https"`
 	SSLCertificate *SSLCertInfo         `json:"ssl_certificate,omitempty"`
 	Headers        SecurityHeadersCheck `json:"headers"`
+	DNS            DNSReport            `json:"dns"`
+	Cookies        CookieSecurityReport `json:"cookies"`
 	MixedContent   bool                 `json:"mixed_content"`
+}
+
+// DNSReport tracks domain-level security, CAA, and email hygiene records (SPF, DMARC, MX).
+type DNSReport struct {
+	HasCAA        bool     `json:"has_caa"`
+	CAARecords    []string `json:"caa_records,omitempty"`
+	HasSPF        bool     `json:"has_spf"`
+	SPFRecord     string   `json:"spf_record,omitempty"`
+	HasDMARC      bool     `json:"has_dmarc"`
+	DMARCRecord   string   `json:"dmarc_record,omitempty"`
+	MXRecords     []string `json:"mx_records,omitempty"`
+	HasMX         bool     `json:"has_mx"`
+}
+
+// CookieSecurityReport evaluates Set-Cookie security flags.
+type CookieSecurityReport struct {
+	TotalCookies    int          `json:"total_cookies"`
+	SecureCount     int          `json:"secure_count"`
+	HttpOnlyCount   int          `json:"http_only_count"`
+	SameSiteCount   int          `json:"same_site_count"`
+	Issues          []string     `json:"issues,omitempty"`
+	CookieDetails   []CookieItem `json:"cookie_details,omitempty"`
+}
+
+// CookieItem details individual cookie attributes.
+type CookieItem struct {
+	Name     string `json:"name"`
+	Secure   bool   `json:"secure"`
+	HttpOnly bool   `json:"http_only"`
+	SameSite string `json:"same_site"`
+	Status   string `json:"status"` // pass, warning
 }
 
 // SSLCertInfo contains details of the TLS certificate.
@@ -88,7 +122,7 @@ type HeaderItem struct {
 	Recommendation string `json:"recommendation"`
 }
 
-// SEOReport contains metadata, heading hierarchy, and social card previews.
+// SEOReport contains metadata, heading hierarchy, crawl discovery, and social card previews.
 type SEOReport struct {
 	Score        int             `json:"score"`
 	Title        SEOItem         `json:"title"`
@@ -104,8 +138,33 @@ type SEOReport struct {
 	H2Count      int             `json:"h2_count"`
 	H2List       []string        `json:"h2_list"`
 	H3Count      int             `json:"h3_count"`
+	Discovery    CrawlDiscovery  `json:"discovery"`
 	OpenGraph    OpenGraphData   `json:"open_graph"`
 	TwitterCard  TwitterCardData `json:"twitter_card"`
+}
+
+// CrawlDiscovery captures robots.txt and sitemap.xml presence.
+type CrawlDiscovery struct {
+	HasRobotsTxt    bool   `json:"has_robots_txt"`
+	RobotsTxtURL    string `json:"robots_txt_url,omitempty"`
+	HasSitemap      bool   `json:"has_sitemap"`
+	SitemapURL      string `json:"sitemap_url,omitempty"`
+}
+
+// StructuredDataReport holds extracted JSON-LD schemas and microdata.
+type StructuredDataReport struct {
+	Present     bool            `json:"present"`
+	Count       int             `json:"count"`
+	SchemaTypes []string        `json:"schema_types"`
+	Items       []JSONLDSummary `json:"items,omitempty"`
+}
+
+// JSONLDSummary represents parsed schema details.
+type JSONLDSummary struct {
+	Type        string `json:"type"`
+	Context     string `json:"context,omitempty"`
+	Name        string `json:"name,omitempty"`
+	RawSnippet  string `json:"raw_snippet,omitempty"`
 }
 
 // SEOItem represents an individual SEO element with evaluation.
