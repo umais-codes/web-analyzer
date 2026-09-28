@@ -4,7 +4,8 @@
 *.dll
 *.so
 *.dylib
-analyzer
+/analyzer
+/web-analyzer
 bin/
 dist/
 
